@@ -4,8 +4,23 @@ const app=express();
 const cors=require('cors');
 const jwt=require('jsonwebtoken');
 const jwksClient=require('jwks-rsa');
+const mongoose=require('mongoose');
+const userController=require('./controllers/User.controlles');
 require('dotenv').config();
 app.use(cors());
+
+mongoose.connect('mongodb://localhost:27017/user',
+    { useNewUrlParser: true, useUnifiedTopology: true }
+);
+
+
+// user end-point
+app.get('/books',userController);
+
+
+
+
+
 
 const client = jwksClient({
     // this url comes from your app on the auth0 dashboard 
@@ -35,3 +50,4 @@ app.get('/authorize',(req,res)=>{
 app.listen(process.env.PORT,()=>{
     console.log(`listening to port: ${process.env.PORT}`);
 })
+
