@@ -5,7 +5,7 @@ const cors=require('cors');
 const jwt=require('jsonwebtoken');
 const jwksClient=require('jwks-rsa');
 const mongoose=require('mongoose');
-const {userController,addBook,deleteBook}=require('./controllers/User.controlles');
+const {userController,addBook,deleteBook,updateBook}=require('./controllers/User.controlles');
 require('dotenv').config();
 app.use(cors());
 app.use(express.json());
@@ -23,7 +23,8 @@ app.post('/addbook',addBook);
 // user delete book end-point
 app.delete('/deletebook/:index',deleteBook);
 
-
+// user update book end-point
+app.put('/updatebook/:index',updateBook);
 
 const client = jwksClient({
     // this url comes from your app on the auth0 dashboard 
