@@ -5,10 +5,10 @@ const cors=require('cors');
 const jwt=require('jsonwebtoken');
 const jwksClient=require('jwks-rsa');
 const mongoose=require('mongoose');
-const userController=require('./controllers/User.controlles');
+const {userController,addBook,deleteBook}=require('./controllers/User.controlles');
 require('dotenv').config();
 app.use(cors());
-
+app.use(express.json());
 mongoose.connect('mongodb://localhost:27017/user',
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
@@ -17,8 +17,11 @@ mongoose.connect('mongodb://localhost:27017/user',
 // user end-point
 app.get('/books',userController);
 
+// user add book end-point
+app.post('/addbook',addBook);
 
-
+// user delete book end-point
+app.delete('/deletebook/:index',deleteBook);
 
 
 
