@@ -34,7 +34,6 @@ const addBook=(req,res)=>{
 const deleteBook=(req,res)=>{
     const email=req.query.email;
     const book_id=Number(req.params.index);
-    console.log(book_id);
     userModels.findOne({email:email}, (error, books)=>{
         let newBookArra=[];
         books.books.forEach((el,idx)=>{
@@ -49,9 +48,23 @@ const deleteBook=(req,res)=>{
 
 }
 
+const updateBook=(req,res)=>{
+    const {email,name,description,status}= req.body;
+    const book_id=Number(req.params.index);
+    userModels.findOne({email:email}, (error, books)=>{
+        if (error) {
+            res.send(error);
+        }
+        else{
+            books.books.splice(book_id,1,{name:name,description:description,status:status});
+            books.save();
+            res.send(books.books)
+        }
+    })
+}
 
 
 
 
 
-module.exports={userController,addBook,deleteBook};
+module.exports={userController,addBook,deleteBook,updateBook};
